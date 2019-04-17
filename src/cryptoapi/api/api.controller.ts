@@ -26,13 +26,17 @@ export class ApiController {
     // GET /api/find/:index
     @Get('find/:name')
     findOne(@Param('name') name: string) {
-        const isFound = [...this.cryptoCurrencies].some(crypto => crypto.name === name);
+        const isFound = [...this.cryptoCurrencies].some(
+            crypto => crypto.name === name,
+        );
 
         return {
             msg: isFound ? 'Currency found' : 'Currency not found',
             // conditional property
             ...(isFound && {
-                result: [...this.cryptoCurrencies].find(crypto => crypto.name === name),
+                result: [...this.cryptoCurrencies].find(
+                    crypto => crypto.name === name,
+                ),
             }),
         };
     }
@@ -40,7 +44,9 @@ export class ApiController {
     // POST /api/add-crypto
     @Post('add-crypto')
     addOne(@Body() newCrypto: CryptoCurrencyDto) {
-        const isFound = [...this.cryptoCurrencies].some(crypto => crypto.name === newCrypto.name);
+        const isFound = [...this.cryptoCurrencies].some(
+            crypto => crypto.name === newCrypto.name,
+        );
 
         if (!isFound) {
             this.cryptoCurrencies.add(newCrypto);
@@ -55,13 +61,18 @@ export class ApiController {
 
     // PUT /api/edit-crypto/:name
     @Put('edit-crypto/:name')
-    editOne(@Param('name') name: string, @Body() updatedCrypto: UpdateCryptoCurrencyDto) {
+    editOne(
+        @Param('name') name: string,
+        @Body() updatedCrypto: UpdateCryptoCurrencyDto,
+    ) {
         const isFound = [...this.cryptoCurrencies].some(
             crypto => crypto.name === name,
         );
 
         if (isFound) {
-            const updatedCryptos = [...this.cryptoCurrencies].filter(crypto => crypto.name !== name);
+            const updatedCryptos = [...this.cryptoCurrencies].filter(
+                crypto => crypto.name !== name,
+            );
             updatedCryptos.push(updatedCrypto);
 
             // update the cryptoCurrencies set
@@ -71,7 +82,11 @@ export class ApiController {
             });
 
             return {
-                msg: `Currency ${name} updated${updatedCrypto.name !== name ? ' to ' + updatedCrypto.name : ''}`,
+                msg: `Currency ${name} updated${
+                    updatedCrypto.name !== name
+                        ? ' to ' + updatedCrypto.name
+                        : ''
+                    }`,
                 list: [...this.cryptoCurrencies],
             };
         }
