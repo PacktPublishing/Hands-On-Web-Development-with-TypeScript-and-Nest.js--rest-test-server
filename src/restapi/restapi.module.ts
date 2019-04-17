@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { ApiController } from './api/api.controller';
 
-@Module({})
+@Module({
+  controllers: [ApiController]
+})
 export class RestapiModule {}
