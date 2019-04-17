@@ -32,7 +32,7 @@ export class ApiController {
 
     // PUT /api/edit-crypto/:name
     @Put('edit-crypto/:name')
-    editOne(@Param('name') name, @Body('newName') newName) {
+    editOne(@Param('name') name: string, @Body('newName') newName: string) {
         const updatedCryptos = [...this.cryptoCurrencies].filter(crypto => crypto !== name);
         updatedCryptos.push(`${newName} (ex ${name})`);
 
@@ -45,7 +45,7 @@ export class ApiController {
 
     // DELETE /api/delete-crypto/:name
     @Delete('delete-crypto/:name')
-    deleteOne(@Param('name') name) {
+    deleteOne(@Param('name') name: string) {
         const isFound = this.cryptoCurrencies.has(name);
 
         return isFound ? this.cryptoCurrencies.delete(name) &&
