@@ -23,7 +23,7 @@ export class ApiController {
         };
     }
 
-    // GET /api/find/:index
+    // GET /api/find/:name
     @Get('find/:name')
     findOne(@Param('name') name: string) {
         const isFound = [...this.cryptoCurrencies].some(
