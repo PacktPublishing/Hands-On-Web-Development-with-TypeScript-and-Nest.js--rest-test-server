@@ -2,6 +2,7 @@ import { Controller, Get, Param, Header, Post, Body, Put, Delete } from '@nestjs
 import { CryptoCurrency as CryptoCurrencyDto, CryptoCurrency } from '../dto/cryptoCurrency.dto';
 import { UpdateCryptoCurrencyDto } from '../dto/updateCryptoCurrency.dto';
 
+// handles all incoming requests with path prefix /api
 @Controller('api')
 export class ApiController {
     private readonly cryptoCurrencies: Set<CryptoCurrency> = new Set([
