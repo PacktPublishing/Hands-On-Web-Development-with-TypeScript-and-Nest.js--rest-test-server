@@ -4,7 +4,7 @@ import { UpdateCryptoCurrencyDto } from '../dto/updateCryptoCurrency.dto';
 
 @Controller('api')
 export class ApiController {
-    private readonly cryptoCurrencies: Set<CryptoCurrencyDto> = new Set([
+    private readonly cryptoCurrencies: Set<CryptoCurrency> = new Set([
         { name: 'bitcoin', amount: 12 },
         { name: 'ethereum', amount: 23 },
         { name: 'litecoin', amount: 34 },
