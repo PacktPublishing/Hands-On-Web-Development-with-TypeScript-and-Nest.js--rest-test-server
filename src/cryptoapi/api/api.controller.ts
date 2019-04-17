@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Header, Post, Body, Put, Delete } from '@nestjs/common';
-import { CryptoCurrency as CryptoCurrencyDto, CryptoCurrency } from '../dto/cryptoCurrency.dto';
+import { CryptoCurrencyDto } from '../dto/cryptoCurrency.dto';
 import { UpdateCryptoCurrencyDto } from '../dto/updateCryptoCurrency.dto';
+import { CryptoCurrency } from '../types';
 
 // handles all incoming requests with path prefix /api
 @Controller('api')
