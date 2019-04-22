@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ApiController } from './api/api.controller';
+import { CryptoapiService } from './cryptoapi.service';
+import { CryptoapiController } from './cryptoapi.controller';
 
 @Module({
-  controllers: [ApiController],
+  controllers: [CryptoapiController],
+  providers: [CryptoapiService],
 })
 export class CryptoapiModule {}

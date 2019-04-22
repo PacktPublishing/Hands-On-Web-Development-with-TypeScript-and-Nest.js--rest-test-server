@@ -1,11 +1,10 @@
-import { Controller, Get, Param, Header, Post, Body, Put, Delete } from '@nestjs/common';
-import { CryptoCurrencyDto } from '../dto/cryptoCurrency.dto';
-import { UpdateCryptoCurrencyDto } from '../dto/updateCryptoCurrency.dto';
-import { CryptoCurrency } from '../types';
+import { Injectable } from '@nestjs/common';
+import { CryptoCurrency } from './types';
+import { CryptoCurrencyDto } from './dto/cryptoCurrency.dto';
+import { UpdateCryptoCurrencyDto } from './dto/updateCryptoCurrency.dto';
 
-// handles all incoming requests with path prefix /api
-@Controller('api')
-export class ApiController {
+@Injectable()
+export class CryptoapiService {
     private readonly cryptoCurrencies: Set<CryptoCurrency> = new Set([
         { name: 'bitcoin', amount: 12 },
         { name: 'ethereum', amount: 23 },
@@ -13,9 +12,6 @@ export class ApiController {
         { name: 'monero', amount: 45 },
     ]);
 
-    // GET /api
-    @Get()
-    // @Header('Content-Type', 'application/text')
     fetchAll() {
         return {
             msg: 'All available currencies',
@@ -23,9 +19,7 @@ export class ApiController {
         };
     }
 
-    // GET /api/find/:name
-    @Get('find/:name')
-    findOne(@Param('name') name: string) {
+    findOne(name: string) {
         const isFound = [...this.cryptoCurrencies].some(
             crypto => crypto.name === name,
         );
@@ -41,9 +35,7 @@ export class ApiController {
         };
     }
 
-    // POST /api/add-crypto
-    @Post('add-crypto')
-    addOne(@Body() newCrypto: CryptoCurrencyDto) {
+    addOne(newCrypto: CryptoCurrencyDto) {
         const isFound = [...this.cryptoCurrencies].some(
             crypto => crypto.name === newCrypto.name,
         );
@@ -59,11 +51,9 @@ export class ApiController {
         return { msg: `Currency ${newCrypto.name} already exists` };
     }
 
-    // PUT /api/edit-crypto/:name
-    @Put('edit-crypto/:name')
     editOne(
-        @Param('name') name: string,
-        @Body() updatedCrypto: UpdateCryptoCurrencyDto,
+        name: string,
+        updatedCrypto: UpdateCryptoCurrencyDto,
     ) {
         const isFound = [...this.cryptoCurrencies].some(
             crypto => crypto.name === name,
@@ -94,9 +84,7 @@ export class ApiController {
         return { msg: `Currency ${name} not found` };
     }
 
-    // DELETE /api/delete-crypto/:name
-    @Delete('delete-crypto/:name')
-    deleteOne(@Param('name') name: string) {
+    deleteOne(name: string) {
         const isFound = [...this.cryptoCurrencies].some(
             crypto => crypto.name === name,
         );
