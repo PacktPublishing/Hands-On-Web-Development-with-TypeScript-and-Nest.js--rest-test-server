@@ -1,24 +1,31 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete, UseFilters, BadRequestException } from '@nestjs/common';
 import { CryptoCurrencyDto } from './dto/cryptoCurrency.dto';
 import { UpdateCryptoCurrencyDto } from './dto/updateCryptoCurrency.dto';
 import { CryptoapiService } from './cryptoapi.service';
+import { HttpExceptionFilter } from 'src/Filters/http-exception.filter';
 
 @Controller('cryptoapi')
 export class CryptoapiController {
-
     constructor(private readonly cryptoapiService: CryptoapiService) { }
 
     // GET /api
     @Get()
-    // @Header('Content-Type', 'application/text')
+    @UseFilters(HttpExceptionFilter)
     fetchAll() {
         return this.cryptoapiService.fetchAll();
     }
 
     // GET /api/find/:name
     @Get('find/:name')
+    @UseFilters(HttpExceptionFilter)
     findOne(@Param('name') name: string) {
-        return this.cryptoapiService.findOne(name);
+        return name.length >= 2
+            ? this.cryptoapiService.findOne(name)
+            : (
+                () => {
+                    throw new BadRequestException('Cryptocurrency name should be at least two characters');
+                }
+            )();
     }
 
     // POST /api/add-crypto
