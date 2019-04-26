@@ -2,7 +2,7 @@ import { Controller, Get, Param, Post, Body, Put, Delete, UseFilters, BadRequest
 import { CryptoCurrencyDto } from './dto/cryptoCurrency.dto';
 import { UpdateCryptoCurrencyDto } from './dto/updateCryptoCurrency.dto';
 import { CryptoapiService } from './cryptoapi.service';
-import { HttpExceptionFilter } from 'src/Filters/http-exception.filter';
+import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
 
 @Controller('cryptoapi')
 export class CryptoapiController {
