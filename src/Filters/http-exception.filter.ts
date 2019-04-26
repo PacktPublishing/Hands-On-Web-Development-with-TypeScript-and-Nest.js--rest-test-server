@@ -13,7 +13,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
         let message = exception.getResponse();
         message = (message as BadRequestException).message;
 
-
         response
             .status(status)
             .json({
