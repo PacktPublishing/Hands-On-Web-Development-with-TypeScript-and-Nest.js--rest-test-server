@@ -9,6 +9,7 @@ export class IdentifyMiddleware implements NestMiddleware {
     use(req: Request, res: Response, next: NextFunction) {
         // add an uuid to the object on the request body
         req.body.id = uuid();
+        (req as any).isAuth = true;
 
         // let the request pass through to the handler
         next();
