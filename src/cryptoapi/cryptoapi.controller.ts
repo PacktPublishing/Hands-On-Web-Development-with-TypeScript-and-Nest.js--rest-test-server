@@ -5,10 +5,10 @@ import { CryptoapiService } from './cryptoapi.service';
 import { CustomHttpExceptionFilter } from './filters/custom-http-exception.filter';
 import { NameValidationPipe } from './pipes/name-validation.pipe';
 import { CryptoDtoValidationPipe } from './pipes/crypto-dto-validation.pipe';
-import { AuthGuard } from './guards/auth.guard';
+import { MyAuthGuard } from './guards/my-auth.guard';
 import { IdentifyPipe } from './pipes/identify.pipe';
 
-@UseGuards(AuthGuard)   // controller-scoped guard - applies to all its route handlers
+@UseGuards(MyAuthGuard)   // controller-scoped guard - applies to all its route handlers
 @Controller('cryptoapi')
 export class CryptoapiController {
     constructor(private readonly cryptoapiService: CryptoapiService) { }
@@ -23,7 +23,7 @@ export class CryptoapiController {
     // GET /api/find/:name
     @Get('find/:name')
     @UseFilters(CustomHttpExceptionFilter)
-    @UsePipes(NameValidationPipe) // Pipes covered in section 2
+    @UsePipes(NameValidationPipe)
     findOne(@Param('name') name: string) {
         return this.cryptoapiService.findOne(name);
     }

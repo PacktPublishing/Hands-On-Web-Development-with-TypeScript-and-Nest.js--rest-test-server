@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class MyAuthGuard implements CanActivate {
   // required method to fulfill the CanActivate contract
   canActivate(
     // ExecutionContext inherits from ArgumentsHost (wrapper around the arguments passed to the request handler)
