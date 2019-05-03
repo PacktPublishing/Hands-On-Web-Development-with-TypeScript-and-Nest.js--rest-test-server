@@ -2,7 +2,7 @@ import { Controller, Get, Param, Post, Body, Put, Delete, UseFilters, BadRequest
 import { CryptoCurrencyDto } from './dto/cryptoCurrency.dto';
 import { UpdateCryptoCurrencyDto } from './dto/updateCryptoCurrency.dto';
 import { CryptoapiService } from './cryptoapi.service';
-import { HttpExceptionFilter } from './filters/http-exception.filter';
+import { CustomHttpExceptionFilter } from './filters/custom-http-exception.filter';
 import { NameValidationPipe } from './pipes/name-validation.pipe';
 import { CryptoDtoValidationPipe } from './pipes/crypto-dto-validation.pipe';
 import { AuthGuard } from './guards/auth.guard';
@@ -15,32 +15,23 @@ export class CryptoapiController {
 
     // GET /api
     @Get()
-    @UseFilters(HttpExceptionFilter)
+    @UseFilters(CustomHttpExceptionFilter)
     fetchAll() {
         return this.cryptoapiService.fetchAll();
     }
 
     // GET /api/find/:name
     @Get('find/:name')
-    @UseFilters(HttpExceptionFilter)
-    @UsePipes(NameValidationPipe)
+    @UseFilters(CustomHttpExceptionFilter)
+    @UsePipes(NameValidationPipe) // Pipes covered in section 2
     findOne(@Param('name') name: string) {
-        // breaks the Single REsponsibility Principle
-        /*
-         return name.length >= 2
-            ? this.cryptoapiService.findOne(name)
-            : (
-                () => {
-                    throw new BadRequestException('Cryptocurrency name should be at least two characters');
-                }
-            )();
-        */
         return this.cryptoapiService.findOne(name);
     }
 
     // POST /api/add-crypto
     @Post('add-crypto')
-    // @UsePipes(MyValidationPipe)  // method-scoped pipe - will validate all arguments passed
+    // method-scoped pipe - will validate all arguments passed
+    // @UsePipes(MyValidationPipe)
     @UsePipes(IdentifyPipe)
     addOne(
         // param-scoped pipe - used to validate specific arguments
