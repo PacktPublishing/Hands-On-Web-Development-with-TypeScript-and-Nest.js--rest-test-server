@@ -5,10 +5,9 @@ import { CryptoapiService } from './cryptoapi.service';
 import { CustomHttpExceptionFilter } from './filters/custom-http-exception.filter';
 import { NameValidationPipe } from './pipes/name-validation.pipe';
 import { CryptoDtoValidationPipe } from './pipes/crypto-dto-validation.pipe';
-import { MyAuthGuard } from './guards/my-auth.guard';
 import { IdentifyPipe } from './pipes/identify.pipe';
+import { AuthGuard } from '@nestjs/passport';
 
-@UseGuards(MyAuthGuard)   // controller-scoped guard - applies to all its route handlers
 @Controller('cryptoapi')
 export class CryptoapiController {
     constructor(private readonly cryptoapiService: CryptoapiService) { }
@@ -16,6 +15,7 @@ export class CryptoapiController {
     // GET /api
     @Get()
     @UseFilters(CustomHttpExceptionFilter)
+    @UseGuards(AuthGuard('bearer'))
     fetchAll() {
         return this.cryptoapiService.fetchAll();
     }

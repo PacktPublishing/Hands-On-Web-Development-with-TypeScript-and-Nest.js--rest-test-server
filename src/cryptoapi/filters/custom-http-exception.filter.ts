@@ -17,7 +17,7 @@ export class CustomHttpExceptionFilter implements ExceptionFilter {
 
         const status = exception.getStatus();
         let message = exception.getResponse();
-        message = (message as HttpException).message;
+        message = (message as HttpException).message || (message as any).error;
 
         // custom error response
         response

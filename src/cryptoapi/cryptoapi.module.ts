@@ -2,10 +2,12 @@ import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/c
 import { CryptoapiService } from './cryptoapi.service';
 import { CryptoapiController } from './cryptoapi.controller';
 import { IdentifyMiddleware } from './middlewares/identify.middleware';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   controllers: [CryptoapiController],
   providers: [CryptoapiService],
+  imports: [AuthModule],
 })
 export class CryptoapiModule implements NestModule {
   // required method to apply middlewares
