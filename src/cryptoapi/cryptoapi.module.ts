@@ -3,11 +3,19 @@ import { CryptoapiService } from './cryptoapi.service';
 import { CryptoapiController } from './cryptoapi.controller';
 import { IdentifyMiddleware } from './middlewares/identify.middleware';
 import { AuthModule } from 'src/auth/auth.module';
+import { CryptoSchema } from './schemas/crypto.schema';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   controllers: [CryptoapiController],
   providers: [CryptoapiService],
-  imports: [AuthModule],
+  imports: [
+    AuthModule,
+    // used to inject the Mongoose models inside the service provider
+    MongooseModule.forFeature([
+      { name: 'Crypto', schema: CryptoSchema },
+    ]),
+  ],
 })
 export class CryptoapiModule implements NestModule {
   // required method to apply middlewares

@@ -5,8 +5,8 @@ import { v4 as uuid } from 'uuid';
 @Injectable()
 export class IdentifyPipe implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
-    // add a ID property to the object value passed to the route handler
-    value._id = uuid();
+    // do not transform like this or will conflict with Mongoose
+    // value._id = uuid();
     return value;
   }
 }
