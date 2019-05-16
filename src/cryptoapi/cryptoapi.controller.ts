@@ -5,7 +5,6 @@ import { CryptoapiService } from './cryptoapi.service';
 import { CustomHttpExceptionFilter } from './filters/custom-http-exception.filter';
 import { NameValidationPipe } from './pipes/name-validation.pipe';
 import { CryptoDtoValidationPipe } from './pipes/crypto-dto-validation.pipe';
-import { IdentifyPipe } from './pipes/identify.pipe';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('cryptoapi')
@@ -30,12 +29,8 @@ export class CryptoapiController {
 
     // POST /api/add-crypto
     @Post('add-crypto')
-    // method-scoped pipe - will validate all arguments passed
-    // @UsePipes(MyValidationPipe)
-    @UsePipes(IdentifyPipe)
     addOne(
-        // param-scoped pipe - used to validate specific arguments
-        @Body(new CryptoDtoValidationPipe()) newCrypto: CryptoCurrencyDto,
+        @Body() newCrypto: CryptoCurrencyDto,
     ) {
         return this.cryptoapiService.addOne(newCrypto);
     }
