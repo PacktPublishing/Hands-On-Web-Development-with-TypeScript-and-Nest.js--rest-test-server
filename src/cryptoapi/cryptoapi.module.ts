@@ -1,4 +1,4 @@
-import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer, RequestMethod, HttpModule } from '@nestjs/common';
 import { CryptoapiService } from './cryptoapi.service';
 import { CryptoapiController } from './cryptoapi.controller';
 import { IdentifyMiddleware } from './middlewares/identify.middleware';
@@ -15,6 +15,8 @@ import { MongooseModule } from '@nestjs/mongoose';
     MongooseModule.forFeature([
       { name: 'Crypto', schema: CryptoSchema },
     ]),
+    // to be able to inject the HttpService in the module's services
+    HttpModule,
   ],
 })
 export class CryptoapiModule implements NestModule {

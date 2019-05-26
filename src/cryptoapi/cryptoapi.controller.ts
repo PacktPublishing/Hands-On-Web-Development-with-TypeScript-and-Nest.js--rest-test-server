@@ -11,7 +11,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class CryptoapiController {
     constructor(private readonly cryptoapiService: CryptoapiService) { }
 
-    // GET /api
+    // GET /cryptoapi
     @Get()
     @UseFilters(CustomHttpExceptionFilter)
     @UseGuards(AuthGuard('bearer'))
@@ -19,7 +19,13 @@ export class CryptoapiController {
         return this.cryptoapiService.fetchAll();
     }
 
-    // GET /api/find/:name
+    // GET /cryptoapi/everything
+    @Get('everything')
+    async fetchEverything() {
+        return (await this.cryptoapiService.fetchEverything()).data;
+    }
+
+    // GET /cryptoapi/find/:name
     @Get('find/:name')
     @UseFilters(CustomHttpExceptionFilter)
     @UsePipes(NameValidationPipe)
@@ -27,7 +33,7 @@ export class CryptoapiController {
         return this.cryptoapiService.findOne(name);
     }
 
-    // POST /api/add-crypto
+    // POST /cryptoapi/add-crypto
     @Post('add-crypto')
     addOne(
         @Body() newCrypto: CryptoCurrencyDto,
@@ -35,7 +41,7 @@ export class CryptoapiController {
         return this.cryptoapiService.addOne(newCrypto);
     }
 
-    // PUT /api/edit-crypto/:name
+    // PUT /cryptoapi/edit-crypto/:name
     @Put('edit-crypto/:name')
     editOne(
         @Param('name') name: string,
@@ -44,7 +50,7 @@ export class CryptoapiController {
         return this.cryptoapiService.editOne(name, updatedCrypto);
     }
 
-    // DELETE /api/delete-crypto/:name
+    // DELETE /cryptoapi/delete-crypto/:name
     @Delete('delete-crypto/:name')
     deleteOne(@Param('name') name: string) {
         return this.cryptoapiService.deleteOne(name);

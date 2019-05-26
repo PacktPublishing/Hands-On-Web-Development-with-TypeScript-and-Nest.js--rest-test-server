@@ -27,6 +27,8 @@
     "@nestjs/platform-express": "^6.0.0",
     "class-transformer": "^0.2.0",
     "class-validator": "^0.9.1",
+    "csurf": "^1.10.0",
+    "helmet": "^3.18.0",
     "mongoose": "^5.5.7",
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",

@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpService } from '@nestjs/common';
 import { CryptoCurrency } from './types';
 import { CryptoCurrencyDto } from './dto/cryptoCurrency.dto';
 import { UpdateCryptoCurrencyDto } from './dto/updateCryptoCurrency.dto';
@@ -7,10 +7,18 @@ import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class CryptoapiService {
-    constructor(@InjectModel('Crypto') private readonly cryptoModel: Model<CryptoCurrency>) { }
+    constructor(
+        @InjectModel('Crypto') private readonly cryptoModel: Model<CryptoCurrency>,
+        private readonly httpService: HttpService,
+    ) { }
 
     async fetchAll() {
         return await this.cryptoModel.find().exec();
+    }
+
+    fetchEverything() {
+        return this.httpService
+            .get('http://jsonplaceholder.typicode.com/photos').toPromise();
     }
 
     async findOne(name: string) {
